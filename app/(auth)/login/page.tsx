@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Zap, Loader2 } from "lucide-react";
+import { Zap, Loader as Loader2 } from "lucide-react";
 import { loginSchema, LoginInput } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/AuthShell";
 

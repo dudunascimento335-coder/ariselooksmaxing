@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { CircleCheck as CheckCircle2, Circle as XCircle, Loader as Loader2 } from "lucide-react";
 import { AuthShell } from "@/components/auth/AuthShell";
 
 function VerifyEmailContent() {

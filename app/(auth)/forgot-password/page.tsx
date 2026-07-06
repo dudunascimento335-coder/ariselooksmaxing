@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, MailCheck } from "lucide-react";
+import { Loader as Loader2, MailCheck } from "lucide-react";
 import { forgotPasswordSchema } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { z } from "zod";

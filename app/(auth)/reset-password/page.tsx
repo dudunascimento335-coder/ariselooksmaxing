@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader as Loader2, CircleCheck as CheckCircle2 } from "lucide-react";
 import { resetPasswordSchema, ResetPasswordInput } from "@/lib/validations";
 import { AuthShell } from "@/components/auth/AuthShell";
 

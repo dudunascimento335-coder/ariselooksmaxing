@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Loader2, UploadCloud, ImageIcon } from "lucide-react";
+import { Loader as Loader2, CloudUpload as UploadCloud, Image as ImageIcon } from "lucide-react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { SystemReveal } from "@/components/system/SystemReveal";
 import { AttributeResult } from "@/lib/attributes";

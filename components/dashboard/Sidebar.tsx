@@ -3,19 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
-import {
-  LayoutDashboard,
-  Sparkles,
-  Scissors,
-  User,
-  Dumbbell,
-  Utensils,
-  Droplets,
-  Palette,
-  CheckSquare,
-  CreditCard,
-  LogOut,
-} from 'lucide-react'
+import { LayoutDashboard, Sparkles, Scissors, User, Dumbbell, Utensils, Droplets, Palette, SquareCheck as CheckSquare, CreditCard, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
