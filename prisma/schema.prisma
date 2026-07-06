@@ -1,0 +1,159 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  emailVerified   DateTime?
+  passwordHash    String?
+  image           String?
+  role            String   @default("USER")
+  level           Int      @default(1)
+  xp              Int      @default(0)
+  freeAnalysisUsed Boolean @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  photos           Photo[]
+  analyses         Analysis[]
+  subscriptions    Subscription[]
+  missions         UserMission[]
+  payments         Payment[]
+
+  @@map("users")
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  userId    String
+  url       String
+  createdAt DateTime @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analysis Analysis?
+
+  @@map("photos")
+}
+
+model Analysis {
+  id                 String   @id @default(cuid())
+  userId             String
+  photoId            String   @unique
+  overallScore       Int
+  attributes         Json
+  haircutSuggestions Json
+  beardSuggestions  Json
+  styleSuggestions   Json
+  createdAt          DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@map("analyses")
+}
+
+model Plan {
+  id              String   @id @default(cuid())
+  tier            String   @unique
+  name            String
+  priceInCents    Int
+  analysisLimit   Int      @default(-1) // -1 = unlimited
+  createdAt       DateTime @default(now())
+
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+model Subscription {
+  id                    String   @id @default(cuid())
+  userId                String
+  planId               String
+  status               String   @default("ACTIVE")
+  analysesUsedThisCycle Int     @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan Plan @relation(fields: [planId], references: [id])
+
+  @@map("subscriptions")
+}
+
+model Mission {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  xpReward    Int
+  isDaily     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  userMissions UserMission[]
+
+  @@map("missions")
+}
+
+model UserMission {
+  id        String   @id @default(cuid())
+  userId    String
+  missionId String
+  completed Boolean  @default(false)
+  date      DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mission Mission @relation(fields: [missionId], references: [id])
+
+  @@unique([userId, missionId, date])
+  @@map("user_missions")
+}
+
+model Payment {
+  id             String   @id @default(cuid())
+  userId         String
+  amountInCents  Int
+  status         String   @default("PENDING")
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@map("email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@map("password_reset_tokens")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+
+  @@map("sessions")
+}
